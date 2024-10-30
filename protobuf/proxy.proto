@@ -1,0 +1,55 @@
+syntax = "proto3";
+package proxy;
+option go_package = "github.com/xaionaro-go/grpcproxy/protobuf/go/proxy_grpc";
+
+service NetworkProxy {
+    rpc Proxy(stream MessageForward) returns (stream MessageBack) {}
+}
+
+enum NetworkProtocol {
+    networkProtocolUndefined = 0;
+    TCP = 1;
+}
+
+message ConnectRequest {
+    NetworkProtocol protocol = 1;
+    string hostname = 2;
+    uint32 port = 3;
+}
+
+enum ConnectionStatus {
+    connectionStatusUndefined = 0;
+    Connecting = 1;
+    Connected = 2;
+    Rejected = 3;
+    Finishing = 4;
+    Finished = 5;
+    Reset = 6;
+    Unreachable = 7;
+    TimedOut = 8;
+    UnableToResolve = 9;
+    BrokenProxyConnection = 10;
+}
+
+message ConnectionStatusUpdate {
+    uint64 connectionID = 1;
+    ConnectionStatus connectionStatus = 2;
+    optional string errorMessage = 3;
+    optional bytes localIPAddress = 4;
+    optional uint32 localPort = 5;
+    optional bytes remoteIPAddress = 6;
+    optional uint32 remotePort = 7;
+}
+
+message MessageForward {
+    oneof MessageForwardOneOf {
+        ConnectRequest connect = 1;
+        bytes sendPayload = 2;
+    }
+}
+message MessageBack {
+    oneof MessageBackOneOf {
+        ConnectionStatusUpdate connectionUpdate = 1;
+        bytes receivedPayload = 2;
+    }
+}
