@@ -9,10 +9,13 @@ import (
 	"github.com/xaionaro-go/grpcproxy/protobuf/go/proxy_grpc"
 )
 
+// Dialer is similar to net.Dialer, but it creates connection proxied
+// via the gRPC server (see package `grpcproxyserver` for the server side).
 type Dialer struct {
 	proxy_grpc.NetworkProxyClient
 }
 
+// NewDialer returns a new instance of Dialer.
 func NewDialer(
 	proxy proxy_grpc.NetworkProxyClient,
 ) *Dialer {
@@ -21,6 +24,8 @@ func NewDialer(
 	}
 }
 
+// DialContext is similar to (*net.Dialer).DialContext, but the created
+// connection is proxied via the gRPC server (see package `grpcproxyserver` for the server side).
 func (d *Dialer) DialContext(
 	ctx context.Context,
 	network string,

@@ -8,6 +8,7 @@ import (
 	"github.com/xaionaro-go/grpcproxy/protobuf/go/proxy_grpc"
 )
 
+// GRPCProxyServer is the implementation of the gRPC proxy server.
 type GRPCProxyServer struct {
 	NextConnectionID atomic.Uint64
 	ConnectionMap    sync.Map
@@ -17,10 +18,12 @@ type GRPCProxyServer struct {
 
 var _ proxy_grpc.NetworkProxyServer = (*GRPCProxyServer)(nil)
 
+// New returns a new instance of GRPCProxyServer
 func New() *GRPCProxyServer {
 	return &GRPCProxyServer{}
 }
 
+// Proxy implements NetworkProxyServer.
 func (srv *GRPCProxyServer) Proxy(proxyServer proxy_grpc.NetworkProxy_ProxyServer) error {
 	msg, err := proxyServer.Recv()
 	if err != nil {

@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// ErrResolve means an error occurred while resolving the hostname.
 type ErrResolve struct {
 	Err error
 }
@@ -16,6 +17,7 @@ func (e ErrResolve) Unwrap() error {
 	return e.Err
 }
 
+// ErrConnect means an error occurred while connecting to the destination.
 type ErrConnect struct {
 	Err error
 }
@@ -28,6 +30,7 @@ func (e ErrConnect) Unwrap() error {
 	return e.Err
 }
 
+// ErrConnect means an error occurred while forwarding traffic.
 type ErrProxy struct {
 	Err error
 }

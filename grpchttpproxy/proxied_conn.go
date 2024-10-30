@@ -12,6 +12,9 @@ import (
 	"github.com/xaionaro-go/grpcproxy/protobuf/go/proxy_grpc"
 )
 
+// ProxiedConn is similar to net.TCPConn/net.UDPConn, but is
+// a connection that works via the gRPC proxy server
+// (see package `grpcproxyserver` for the server side).
 type ProxiedConn struct {
 	ctx              context.Context
 	connectionID     atomic.Uint64
@@ -218,6 +221,7 @@ func (conn *ProxiedConn) connect(
 	return nil
 }
 
+// Read has the same semantics as (net.Conn).Read.
 func (conn *ProxiedConn) Read(b []byte) (int, error) {
 	conn.waitGroup.Add(1)
 	defer conn.waitGroup.Done()
@@ -259,6 +263,7 @@ func (conn *ProxiedConn) Read(b []byte) (int, error) {
 	}
 }
 
+// Write has the same semantics as (net.Conn).Write.
 func (conn *ProxiedConn) Write(b []byte) (int, error) {
 	conn.waitGroup.Add(1)
 	defer conn.waitGroup.Done()
@@ -297,26 +302,31 @@ func (conn *ProxiedConn) Close() error {
 	return nil
 }
 
+// LocalAddr has the same semantics as (net.Conn).LocalAddr.
 func (conn *ProxiedConn) LocalAddr() net.Addr {
 	conn.metadataLocker.Lock()
 	defer conn.metadataLocker.Unlock()
 	return nil
 }
 
+// RemoteAddr has the same semantics as (net.Conn).RemoteAddr.
 func (conn *ProxiedConn) RemoteAddr() net.Addr {
 	conn.metadataLocker.Lock()
 	defer conn.metadataLocker.Unlock()
 	return conn.remoteAddr
 }
 
+// SetDeadline has the same semantics as (net.Conn).SetDeadline.
 func (conn *ProxiedConn) SetDeadline(t time.Time) error {
 	return fmt.Errorf("not implemented, yet")
 }
 
+// SetReadDeadline has the same semantics as (net.Conn).SetReadDeadline.
 func (conn *ProxiedConn) SetReadDeadline(t time.Time) error {
 	return fmt.Errorf("not implemented, yet")
 }
 
+// SetWriteDeadline has the same semantics as (net.Conn).SetWriteDeadline.
 func (conn *ProxiedConn) SetWriteDeadline(t time.Time) error {
 	return fmt.Errorf("not implemented, yet")
 }
