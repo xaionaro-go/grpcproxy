@@ -415,6 +415,11 @@ func newAddr(
 			IP:   ipAddr,
 			Port: int(port),
 		}
+	case proxy_grpc.NetworkProtocol_UDP:
+		return &net.UDPAddr{
+			IP:   ipAddr,
+			Port: int(port),
+		}
 	default:
 		panic(fmt.Errorf("unexpected proto: %v", proto))
 	}
@@ -424,6 +429,8 @@ func ProtocolToNetwork(proto proxy_grpc.NetworkProtocol) string {
 	switch proto {
 	case proxy_grpc.NetworkProtocol_TCP:
 		return "tcp"
+	case proxy_grpc.NetworkProtocol_UDP:
+		return "udp"
 	default:
 		return ""
 	}

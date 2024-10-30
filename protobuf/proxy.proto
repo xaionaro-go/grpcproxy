@@ -9,6 +9,7 @@ service NetworkProxy {
 enum NetworkProtocol {
     networkProtocolUndefined = 0;
     TCP = 1;
+    UDP = 2;
 }
 
 message ConnectRequest {

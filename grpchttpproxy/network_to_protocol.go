@@ -10,6 +10,8 @@ func NetworkToProtocol(network string) proxy_grpc.NetworkProtocol {
 	switch network {
 	case "tcp", "tcp4", "tcp6":
 		return proxy_grpc.NetworkProtocol_TCP
+	case "udp", "udp4", "udp6":
+		return proxy_grpc.NetworkProtocol_UDP
 	default:
 		return proxy_grpc.NetworkProtocol_networkProtocolUndefined
 	}

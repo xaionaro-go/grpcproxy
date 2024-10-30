@@ -241,7 +241,7 @@ func (conn *ProxiedConn) Read(b []byte) (int, error) {
 			logger.Tracef(conn.ctx, "received %d bytes", nRead)
 			return nRead, nil
 		}
-		logger.Tracef(conn.ctx, "waiting for incoming data (requested buffer size: %d)...", len(b))
+		logger.Tracef(conn.ctx, "waiting for incoming data (requester's buffer size: %d)...", len(b))
 		b = b[nRead:]
 
 		msg, err := conn.connToProxy.Recv()

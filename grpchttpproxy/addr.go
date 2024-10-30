@@ -17,6 +17,11 @@ func newAddr(
 			IP:   ipAddr,
 			Port: int(port),
 		}
+	case proxy_grpc.NetworkProtocol_UDP:
+		return &net.UDPAddr{
+			IP:   ipAddr,
+			Port: int(port),
+		}
 	default:
 		return nil
 	}
