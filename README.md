@@ -37,7 +37,7 @@ conn, err := net.Dial("tcp", addr)
 ```
 with proxied connection:
 ```go
-conn, err := grpchttpproxy.NewDialer(myGRPCClient).DialContext(ctx, "tcp", "addr")
+conn, err := grpchttpproxy.NewDialer(myGRPCClient).DialContext(ctx, "tcp", addr)
 ```
 
 Or if you need to proxy an HTTP request, you may make an HTTP client:
