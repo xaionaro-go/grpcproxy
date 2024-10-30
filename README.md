@@ -12,8 +12,8 @@ This is a gRPC server and a client that allows to proxy network connections via 
 Let's say you already have a gRPC server written in Go, something like this:
 ```go
 	grpcServer := grpc.NewServer()
-	myFancyServiceGRPC := server.NewGRPCServer(myFancyService)
-	myFancyService_grpc.RegisterMyFancyServiceServer(grpcServer, myFancyServiceGRPC)
+	myFancyService := myfancyservice.New()
+	myFancyService_grpc.RegisterMyFancyServiceServer(grpcServer, myFancyService)
 ```
 
 To add the proxy capability you just need to register the proxy service as well:
@@ -22,7 +22,7 @@ import "github.com/xaionaro-go/grpcproxy/grpcproxyserver"
 import "github.com/xaionaro-go/grpcproxy/protobuf/go/proxy_grpc"
 
 	grpcServer := grpc.NewServer()
-	myFancyService := myfancyservice.NewServer(myFancyService)
+	myFancyService := myfancyservice.New()
 	myfancyservice_grpc.RegisterMyFancyServiceServer(grpcServer, myFancyService)
 
 	proxyServer := grpcproxyserver.New()
